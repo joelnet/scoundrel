@@ -74,7 +74,7 @@ export function RulesDialog({ open, onClose, preferences, onSkipFinalPartialRoom
 
           <aside className="credit-block">
             <strong>
-              Scoundrel was designed by <a className="designer-link" href="https://x.com/helvetica?lang=en" target="_blank" rel="noreferrer">Zach Gage</a> and <a className="designer-link" href="https://www.tiktok.com/@kurtiswow" target="_blank" rel="noreferrer">Kurt Bieg</a> in 2011.
+              Scoundrel was designed by <a className="designer-link" href="https://x.com/helvetica?lang=en" target="_blank" rel="noreferrer">Zach Gage</a> and <a className="designer-link" href="https://www.kurtbieg.com/" target="_blank" rel="noreferrer">Kurt Bieg</a> in 2011.
             </strong>
             <span>This is an independent digital implementation and is not affiliated with or endorsed by the original designers.</span>
             <a className="rules-source" href="https://aiscoundrel.com/Scoundrel.pdf" target="_blank" rel="noreferrer">

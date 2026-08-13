@@ -106,6 +106,6 @@ The game ends when you clear the Dungeon or your Health reaches zero.
 
 ## Credit
 
-Scoundrel was co-designed by **[Zach Gage](https://x.com/helvetica?lang=en)** and **[Kurt Bieg](https://www.tiktok.com/@kurtiswow)**. Copyright © 2011 Zach Gage and Kurt Bieg.
+Scoundrel was co-designed by **[Zach Gage](https://x.com/helvetica?lang=en)** and **[Kurt Bieg](https://www.kurtbieg.com/)**. Copyright © 2011 Zach Gage and Kurt Bieg.
 
 This PWA is an independent digital implementation and is not affiliated with or endorsed by the original designers.
