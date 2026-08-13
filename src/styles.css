@@ -947,7 +947,13 @@ a:focus-visible {
   line-height: 1.45;
 }
 
-.credit-block a {
+.credit-block .designer-link {
+  color: #24536b;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.credit-block .rules-source {
   width: fit-content;
   margin-top: 4px;
   display: inline-flex;
@@ -957,7 +963,7 @@ a:focus-visible {
   font-weight: 600;
 }
 
-.credit-block a svg {
+.credit-block .rules-source svg {
   width: 13px;
   height: 13px;
 }

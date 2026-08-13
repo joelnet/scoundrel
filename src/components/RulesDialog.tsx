@@ -73,9 +73,11 @@ export function RulesDialog({ open, onClose, preferences, onSkipFinalPartialRoom
           <p>Tap or click a card, then choose an action. You can also drag cards to a highlighted destination. On desktop, use arrow keys to move between cards, Enter or Space to select, Escape to cancel, and Ctrl/Cmd+Z to undo.</p>
 
           <aside className="credit-block">
-            <strong>Scoundrel was designed by Zach Gage and Kurt Bieg in 2011.</strong>
+            <strong>
+              Scoundrel was designed by <a className="designer-link" href="https://x.com/helvetica?lang=en" target="_blank" rel="noreferrer">Zach Gage</a> and <a className="designer-link" href="https://www.tiktok.com/@kurtiswow" target="_blank" rel="noreferrer">Kurt Bieg</a> in 2011.
+            </strong>
             <span>This is an independent digital implementation and is not affiliated with or endorsed by the original designers.</span>
-            <a href="https://aiscoundrel.com/Scoundrel.pdf" target="_blank" rel="noreferrer">
+            <a className="rules-source" href="https://aiscoundrel.com/Scoundrel.pdf" target="_blank" rel="noreferrer">
               Read the original rules <ExternalLink aria-hidden="true" />
             </a>
           </aside>
