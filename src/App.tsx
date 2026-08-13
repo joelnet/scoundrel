@@ -24,6 +24,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 type DropTarget = "health" | "weapon" | "barehand";
+const CARD_BACK_URL = `${import.meta.env.BASE_URL}card-back.svg`;
 
 function cardScatter(card: Card, slot: number): React.CSSProperties {
   const seed = [...card.id].reduce((total, character) => total + character.charCodeAt(0), slot * 17);
@@ -335,7 +336,7 @@ export default function App() {
               <div className="deck-stack" aria-label={`${state.dungeon.length} cards in the dungeon`}>
                 {state.dungeon.length > 2 && <span className="deck-shadow deck-shadow-2" />}
                 {state.dungeon.length > 1 && <span className="deck-shadow deck-shadow-1" />}
-                {state.dungeon.length > 0 ? <img src="/card-back.svg" alt="Dungeon deck" /> : <span className="empty-slot">Dungeon</span>}
+                {state.dungeon.length > 0 ? <img src={CARD_BACK_URL} alt="Dungeon deck" /> : <span className="empty-slot">Dungeon</span>}
               </div>
               <span className="area-label">Dungeon · {state.dungeon.length}</span>
             </div>
@@ -369,7 +370,7 @@ export default function App() {
           <div className="lower-table">
             <div className="discard-area">
               <div className="discard-pile">
-                {state.discard.length ? <img src="/card-back.svg" alt="Face-down discard pile" /> : <span className="empty-slot">Discard</span>}
+                {state.discard.length ? <img src={CARD_BACK_URL} alt="Face-down discard pile" /> : <span className="empty-slot">Discard</span>}
               </div>
               <span className="area-label">Discard · {state.discard.length}</span>
             </div>
