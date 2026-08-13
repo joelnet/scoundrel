@@ -1,6 +1,6 @@
 # Scoundrel Rules
 
-Scoundrel is a single-player rogue-like card game designed by **Zach Gage and Kurt Bieg** in 2011. It takes about ten minutes and uses a modified standard deck of playing cards.
+Scoundrel is a single-player rogue-like card game designed by **[Zach Gage](https://x.com/helvetica?lang=en)** and **[Kurt Bieg](https://www.kurtbieg.com/)** in 2011. It takes about ten minutes and uses a modified standard deck of playing cards.
 
 This rules file follows the designers' original version 1.0 rule sheet:
 https://aiscoundrel.com/Scoundrel.pdf
@@ -106,6 +106,6 @@ The game ends when you clear the Dungeon or your Health reaches zero.
 
 ## Credit
 
-Scoundrel was co-designed by **[Zach Gage](https://x.com/helvetica?lang=en)** and **[Kurt Bieg](https://www.kurtbieg.com/)**. Copyright © 2011 Zach Gage and Kurt Bieg.
+Scoundrel was co-designed by **[Zach Gage](https://x.com/helvetica?lang=en)** and **[Kurt Bieg](https://www.kurtbieg.com/)**. Copyright © 2011 [Zach Gage](https://x.com/helvetica?lang=en) and [Kurt Bieg](https://www.kurtbieg.com/).
 
 This PWA is an independent digital implementation and is not affiliated with or endorsed by the original designers.

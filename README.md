@@ -1,6 +1,6 @@
 # Scoundrel PWA
 
-An offline-first implementation of the solitaire card game Scoundrel, designed by Zach Gage and Kurt Bieg.
+An offline-first implementation of the solitaire card game Scoundrel, designed by [Zach Gage](https://x.com/helvetica?lang=en) and [Kurt Bieg](https://www.kurtbieg.com/).
 
 Play at [joelnet.github.io/scoundrel](https://joelnet.github.io/scoundrel/).
 
