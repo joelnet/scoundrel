@@ -1,11 +1,14 @@
 import { ExternalLink, X } from "lucide-react";
+import type { GamePreferences } from "../game/types";
 
 interface RulesDialogProps {
   open: boolean;
   onClose: () => void;
+  preferences: GamePreferences;
+  onSkipFinalPartialRoomChange: (enabled: boolean) => void;
 }
 
-export function RulesDialog({ open, onClose }: RulesDialogProps) {
+export function RulesDialog({ open, onClose, preferences, onSkipFinalPartialRoomChange }: RulesDialogProps) {
   if (!open) return null;
 
   return (
@@ -46,7 +49,22 @@ export function RulesDialog({ open, onClose }: RulesDialogProps) {
           </div>
 
           <h3>Rooms</h3>
-          <p>Choose three of four cards in any order. The unchosen card carries into the next room. You may avoid a full room, placing all four cards under the dungeon, but never avoid two rooms in a row. Resolve every card in the final partial room.</p>
+          <p>Choose three of four cards in any order. The unchosen card carries into the next room. You may avoid a full room, placing all four cards under the dungeon, but never avoid two rooms in a row. The original rules require every card in the final partial room to be resolved.</p>
+
+          <h3>House rule</h3>
+          <label className="house-rule" htmlFor="skip-final-room">
+            <span>
+              <strong>Skip the final two cards</strong>
+              <small>End the run when fewer than four cards remain instead of resolving the incomplete room.</small>
+            </span>
+            <input
+              id="skip-final-room"
+              type="checkbox"
+              role="switch"
+              checked={preferences.skipFinalPartialRoom}
+              onChange={(event) => onSkipFinalPartialRoomChange(event.target.checked)}
+            />
+          </label>
 
           <h3>Scoring</h3>
           <p>Clear the dungeon to score your remaining health. Finishing at 20 health with a potion as the last card adds that potion's value. If you die, your score is the negative value of all unresolved monsters.</p>

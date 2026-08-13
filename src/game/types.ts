@@ -45,6 +45,11 @@ export interface PersistedSession {
   past: GameState[];
 }
 
+export interface GamePreferences {
+  version: 1;
+  skipFinalPartialRoom: boolean;
+}
+
 export interface GameResult {
   status: Exclude<GameStatus, "playing">;
   score: number;

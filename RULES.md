@@ -47,6 +47,10 @@ A Room contains four face-up cards. Choose and resolve three cards, one at a tim
 
 Near the end of the Dungeon there may not be enough cards to refill to four. This final partial Room cannot be avoided and every card in it must be resolved.
 
+## Optional House Rule
+
+This digital version includes a **Skip the final two cards** option, enabled by default. When enabled, the game ends after the last full Room and the remaining incomplete two-card Room is ignored. Disable it in the Rules dialog to use the original rule requiring those cards to be resolved. Your preference is saved for future visits.
+
 ## Avoiding a Room
 
 Before choosing any card in a full Room, you may avoid it. Put all four Room cards at the bottom of the Dungeon and deal a new Room of four cards.

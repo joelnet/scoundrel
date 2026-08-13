@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { createGame } from "./engine";
-import { BEST_SCORE_KEY, loadBestScore, loadSession, saveBestScore, saveSession, SESSION_KEY } from "./persistence";
+import {
+  BEST_SCORE_KEY,
+  loadBestScore,
+  loadPreferences,
+  loadSession,
+  PREFERENCES_KEY,
+  saveBestScore,
+  savePreferences,
+  saveSession,
+  SESSION_KEY
+} from "./persistence";
 
 function memoryStorage(initial: Record<string, string> = {}) {
   const values = new Map(Object.entries(initial));
@@ -38,5 +48,16 @@ describe("session persistence", () => {
     saveBestScore(storage, -4);
     expect(storage.value(BEST_SCORE_KEY)).toBe("-4");
     expect(loadBestScore(storage)).toBe(-4);
+  });
+
+  it("defaults the final-room house rule to enabled", () => {
+    expect(loadPreferences(memoryStorage())).toEqual({ version: 1, skipFinalPartialRoom: true });
+    expect(loadPreferences(memoryStorage({ [PREFERENCES_KEY]: "invalid" }))).toEqual({ version: 1, skipFinalPartialRoom: true });
+  });
+
+  it("remembers a disabled house rule", () => {
+    const storage = memoryStorage();
+    savePreferences(storage, { version: 1, skipFinalPartialRoom: false });
+    expect(loadPreferences(storage)).toEqual({ version: 1, skipFinalPartialRoom: false });
   });
 });

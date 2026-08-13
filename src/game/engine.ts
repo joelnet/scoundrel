@@ -1,5 +1,5 @@
 import { createDungeon, shuffle } from "./deck";
-import type { Card, GameAction, GameState } from "./types";
+import type { Card, GameAction, GamePreferences, GameState } from "./types";
 
 export const MAX_HEALTH = 20;
 
@@ -71,7 +71,29 @@ function removeRoomCard(room: Card[], cardId: string): Card[] {
   return room.filter((card) => card.id !== cardId);
 }
 
-function finishIfNeeded(state: GameState, lastCard: Card): GameState {
+const CANONICAL_RULES: Pick<GamePreferences, "skipFinalPartialRoom"> = {
+  skipFinalPartialRoom: false
+};
+
+function winGame(state: GameState, lastCard: Card, skippedCards = 0): GameState {
+  const bonus = isPotion(lastCard) && state.health === MAX_HEALTH ? lastCard.value : 0;
+  const score = state.health + bonus;
+  const prefix = skippedCards ? `Final ${skippedCards} cards skipped. ` : "";
+  return {
+    ...state,
+    status: "won",
+    score,
+    message: bonus
+      ? `${prefix}Dungeon cleared with ${state.health} health and a ${bonus}-point final potion bonus.`
+      : `${prefix}Dungeon cleared with ${state.health} health.`
+  };
+}
+
+function finishIfNeeded(
+  state: GameState,
+  lastCard: Card,
+  preferences: Pick<GamePreferences, "skipFinalPartialRoom">
+): GameState {
   if (state.health <= 0) {
     const lostState = { ...state, health: 0 };
     const score = -unresolvedMonsterTotal(lostState);
@@ -87,22 +109,13 @@ function finishIfNeeded(state: GameState, lastCard: Card): GameState {
   const partialRoomComplete = state.dungeon.length === 0 && state.room.length === 0;
 
   if (partialRoomComplete) {
-    const bonus = isPotion(lastCard) && state.health === MAX_HEALTH ? lastCard.value : 0;
-    const score = state.health + bonus;
-    return {
-      ...state,
-      status: "won",
-      score,
-      message: bonus
-        ? `Dungeon cleared with ${state.health} health and a ${bonus}-point final potion bonus.`
-        : `Dungeon cleared with ${state.health} health.`
-    };
+    return winGame(state, lastCard);
   }
 
   if (!normalRoomComplete) return state;
 
   const { drawn, dungeon } = dealFromDungeon(state.dungeon, 3);
-  return {
+  const nextRoom: GameState = {
     ...state,
     dungeon,
     room: [...state.room, ...drawn],
@@ -112,9 +125,18 @@ function finishIfNeeded(state: GameState, lastCard: Card): GameState {
     lastRoomAvoided: false,
     message: drawn.length < 3 ? "The final chamber is open. Resolve every card." : "A new room opens."
   };
+  if (drawn.length < 3 && preferences.skipFinalPartialRoom) {
+    return winGame(nextRoom, lastCard, nextRoom.room.length);
+  }
+  return nextRoom;
 }
 
-function resolveCard(state: GameState, cardId: string, update: (card: Card) => Partial<GameState>): GameState {
+function resolveCard(
+  state: GameState,
+  cardId: string,
+  update: (card: Card) => Partial<GameState>,
+  preferences: Pick<GamePreferences, "skipFinalPartialRoom">
+): GameState {
   if (state.status !== "playing") return state;
   const card = state.room.find((candidate) => candidate.id === cardId);
   if (!card) return state;
@@ -125,10 +147,14 @@ function resolveCard(state: GameState, cardId: string, update: (card: Card) => P
     room: removeRoomCard(state.room, cardId),
     resolvedThisRoom: state.resolvedThisRoom + 1
   };
-  return finishIfNeeded(next, card);
+  return finishIfNeeded(next, card, preferences);
 }
 
-export function applyAction(state: GameState, action: GameAction): GameState {
+export function applyAction(
+  state: GameState,
+  action: GameAction,
+  preferences: Pick<GamePreferences, "skipFinalPartialRoom"> = CANONICAL_RULES
+): GameState {
   if (state.status !== "playing") return state;
 
   switch (action.type) {
@@ -167,7 +193,7 @@ export function applyAction(state: GameState, action: GameAction): GameState {
           discard: [...state.discard, card],
           message: healed > 0 ? `${cardLabel(card)} restores ${healed} health.` : `${cardLabel(card)} is used at full health.`
         };
-      });
+      }, preferences);
 
     case "equip-weapon":
       {
@@ -181,7 +207,7 @@ export function applyAction(state: GameState, action: GameAction): GameState {
           discard: [...state.discard, ...oldWeaponCards],
           message: `${cardLabel(card)} is equipped${state.weapon ? ", replacing the old weapon" : ""}.`
         };
-      });
+      }, preferences);
 
     case "fight-barehanded":
       {
@@ -194,7 +220,7 @@ export function applyAction(state: GameState, action: GameAction): GameState {
           discard: [...state.discard, card],
           message: `${cardLabel(card)} deals ${card.value} damage barehanded.`
         };
-      });
+      }, preferences);
 
     case "fight-with-weapon":
       {
@@ -213,6 +239,6 @@ export function applyAction(state: GameState, action: GameAction): GameState {
           },
           message: `${cardLabel(state.weapon.card)} defeats ${cardLabel(card)}${damage ? `; you take ${damage} damage` : " without injury"}.`
         };
-      });
+      }, preferences);
   }
 }

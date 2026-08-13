@@ -80,6 +80,39 @@ describe("rooms", () => {
     expect(finished.status).toBe("won");
     expect(finished.score).toBe(18);
   });
+
+  it("can skip the final incomplete room with the house rule", () => {
+    const penultimateChoice = state({
+      room: [get("clubs-2"), get("clubs-3")],
+      dungeon: [get("spades-K")],
+      health: 20,
+      resolvedThisRoom: 2
+    });
+    const finished = applyAction(
+      penultimateChoice,
+      { type: "fight-barehanded", cardId: "clubs-2" },
+      { skipFinalPartialRoom: true }
+    );
+    expect(finished.status).toBe("won");
+    expect(finished.room.map((card) => card.id)).toEqual(["clubs-3", "spades-K"]);
+    expect(finished.score).toBe(18);
+    expect(finished.message).toContain("Final 2 cards skipped");
+  });
+
+  it("opens the final incomplete room when the house rule is disabled", () => {
+    const penultimateChoice = state({
+      room: [get("clubs-2"), get("clubs-3")],
+      dungeon: [get("spades-K")],
+      resolvedThisRoom: 2
+    });
+    const continued = applyAction(
+      penultimateChoice,
+      { type: "fight-barehanded", cardId: "clubs-2" },
+      { skipFinalPartialRoom: false }
+    );
+    expect(continued.status).toBe("playing");
+    expect(continued.room.map((card) => card.id)).toEqual(["clubs-3", "spades-K"]);
+  });
 });
 
 describe("card resolution", () => {

@@ -16,7 +16,7 @@ import { FaGithub } from "react-icons/fa";
 import { CardFace, cardName } from "./components/CardFace";
 import { RulesDialog } from "./components/RulesDialog";
 import { applyAction, canAvoidRoom, canUseWeapon, createGame, isMonster, isPotion, isWeapon, MAX_HEALTH } from "./game/engine";
-import { loadBestScore, loadSession, saveBestScore, saveSession } from "./game/persistence";
+import { loadBestScore, loadPreferences, loadSession, saveBestScore, savePreferences, saveSession } from "./game/persistence";
 import type { Card, GameAction, GameState, PersistedSession } from "./game/types";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -121,6 +121,7 @@ export default function App() {
   const [session, setSession] = useState<PersistedSession>(initialSession);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [rulesOpen, setRulesOpen] = useState(false);
+  const [preferences, setPreferences] = useState(() => loadPreferences(window.localStorage));
   const [bestScore, setBestScore] = useState<number | null>(() => loadBestScore(window.localStorage));
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [drag, setDrag] = useState<DragState | null>(null);
@@ -135,6 +136,10 @@ export default function App() {
   useEffect(() => {
     saveSession(window.localStorage, session);
   }, [session]);
+
+  useEffect(() => {
+    savePreferences(window.localStorage, preferences);
+  }, [preferences]);
 
   useEffect(() => {
     setAnnouncement(state.message);
@@ -158,12 +163,12 @@ export default function App() {
 
   const commit = useCallback((action: GameAction) => {
     setSession((current) => {
-      const next = applyAction(current.present, action);
+      const next = applyAction(current.present, action, preferences);
       if (next === current.present) return current;
       return { version: 1, present: next, past: [...current.past, current.present].slice(-100) };
     });
     setSelectedId(null);
-  }, []);
+  }, [preferences]);
 
   const undo = useCallback(() => {
     setSession((current) => {
@@ -448,7 +453,12 @@ export default function App() {
           </div>
         )}
 
-        <RulesDialog open={rulesOpen} onClose={() => setRulesOpen(false)} />
+        <RulesDialog
+          open={rulesOpen}
+          onClose={() => setRulesOpen(false)}
+          preferences={preferences}
+          onSkipFinalPartialRoomChange={(enabled) => setPreferences({ version: 1, skipFinalPartialRoom: enabled })}
+        />
         {drag && <CardFace card={drag.card} compact className="drag-ghost" style={{ left: drag.x, top: drag.y }} />}
       </main>
 
