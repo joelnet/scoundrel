@@ -4,7 +4,7 @@ An offline-first implementation of the solitaire card game Scoundrel, designed b
 
 Play at [joelnet.github.io/scoundrel](https://joelnet.github.io/scoundrel/).
 
-![Scoundrel game table](./docs/scoundrel-gameplay.png)
+[![Scoundrel game table](./docs/scoundrel-gameplay.png)](https://joelnet.github.io/scoundrel/)
 
 ## How to Play
 
