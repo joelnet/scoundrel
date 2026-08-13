@@ -12,6 +12,7 @@ import {
   Undo2,
   UserRound
 } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
 import { CardFace, cardName } from "./components/CardFace";
 import { RulesDialog } from "./components/RulesDialog";
 import { applyAction, canAvoidRoom, canUseWeapon, createGame, isMonster, isPotion, isWeapon, MAX_HEALTH } from "./game/engine";
@@ -326,6 +327,7 @@ export default function App() {
             <button className="icon-button" type="button" onClick={startNewGame} aria-label="New game" title="New game"><RotateCcw aria-hidden="true" /></button>
             <button className="icon-button" type="button" onClick={undo} disabled={!session.past.length} aria-label="Undo" title="Undo (Ctrl or Command plus Z)"><Undo2 aria-hidden="true" /></button>
             <button className="icon-button" type="button" onClick={() => setRulesOpen(true)} aria-label="Rules and credits" title="Rules and credits"><BookOpen aria-hidden="true" /></button>
+            <a className="icon-button" href="https://github.com/joelnet/scoundrel" target="_blank" rel="noreferrer" aria-label="View source on GitHub" title="View source on GitHub"><FaGithub aria-hidden="true" /></a>
             {installPrompt && <button className="icon-button" type="button" onClick={install} aria-label="Install app" title="Install app"><Download aria-hidden="true" /></button>}
           </nav>
         </header>

@@ -186,6 +186,7 @@ a:focus-visible {
   border: 1px solid transparent;
   border-radius: 5px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .icon-button:hover:not(:disabled) {
