@@ -8,7 +8,9 @@ Play at [joelnet.github.io/scoundrel](https://joelnet.github.io/scoundrel/).
 
 ## How to Play
 
-Watch [How to Play Scoundrel](https://www.youtube.com/watch?v=Gt2tYzM93h4) or read the [complete rules](./RULES.md).
+[![Watch How to Play Scoundrel](https://i.ytimg.com/vi/Gt2tYzM93h4/maxresdefault.jpg)](https://www.youtube.com/watch?v=Gt2tYzM93h4)
+
+Prefer text? Read the [complete rules](./RULES.md).
 
 ## Development
 
